@@ -6,11 +6,14 @@ import { useEffect } from 'react';
 // import { WMSTilesRenderer, WMTSTilesRenderer } from './functions';
 // import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls'
 import {TilesRenderer} from '3d-tiles-renderer'
+// import tileSet from './assets/tileset.json'
+import { CameraHelper, Group, sRGBEncoding } from 'three';
 // import { useEffect} from 'react';
 
 function App() {
 
   // const tilesUrl = 'http://godzilla.bk.tudelft.nl/3dtiles/ZuidHolland/lod13/tileset1.json'
+  const tilesUrl = './assets/tiles.json'
   // const baseMap = {
   //   type: 'wmts',
   //   options: {
@@ -70,35 +73,58 @@ function App() {
   
   useEffect(() => {
     const scene = new THREE.Scene()
-
+    let tiles;
     const camera = new THREE.PerspectiveCamera(
-      50,
+      60,
       window.innerWidth / window.innerHeight,
       1,
-      1000
+      10000
     )
-    camera.position.z = 96
-
+    camera.position.set(400, 400, 400)
+    const cameraHelper = new CameraHelper( camera )
+    scene.add(cameraHelper)
     // const canvas = document.getElementById('canvas')
     const renderer = new THREE.WebGLRenderer({
       antialias: true
     })
+    renderer.setPixelRatio(window.devicePixelRatio)
     renderer.setSize(window.innerWidth, window.innerHeight)
+    renderer.setClearColor(0x151c1f)
+    renderer.outputEncoding = sRGBEncoding
     document.body.appendChild(renderer.domElement)
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5)
-    ambientLight.castShadow = true
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.2)
     scene.add(ambientLight)
 
-    const spotLight = new THREE.SpotLight(0xffffff, 1)
-    spotLight.castShadow = true
-    spotLight.position.set(0, 64, 32)
-    scene.add(spotLight)
+    const dirLight = new THREE.DirectionalLight(0xffffff)
+    dirLight.position.set(1, 2, 3)
+    scene.add(dirLight)
 
-    const boxGeometry = new THREE.BoxGeometry(16, 16, 16)
-    const boxMaterial = new THREE.MeshNormalMaterial()
-    const boxMesh = new THREE.Mesh(boxGeometry, boxMaterial)
-    scene.add(boxMesh)
+    const offsetParent = new Group()
+    scene.add(offsetParent)
+
+    const geospatialRotationParent = new Group()
+    offsetParent.add(geospatialRotationParent)
+
+    function reinstantiateTiles () {
+      if (tiles) {
+        geospatialRotationParent.remove(tiles.group)
+        tiles.dispose()
+      }
+
+      tiles = new TilesRenderer(tilesUrl)
+      tiles.fetchOptions.mode = 'no-cors'
+      geospatialRotationParent.add(tiles.group)
+
+      
+    }
+
+    // reinstantiateTiles()
+
+    // const boxGeometry = new THREE.BoxGeometry(16, 16, 16)
+    // const boxMaterial = new THREE.MeshNormalMaterial()
+    // const boxMesh = new THREE.Mesh(boxGeometry, boxMaterial)
+    // scene.add(boxMesh)
 
     const controls = new OrbitControls(camera, renderer.domElement)
 
@@ -115,14 +141,29 @@ function App() {
 
     window.addEventListener('resize', resize)
 
-    const tilesRenderer = new TilesRenderer()
+    const tilesRenderer = new TilesRenderer('https://3dbag.nl/download/3dtiles/v210908_fd2cee53/lod22/tileset.json')
     tilesRenderer.setCamera(camera)
     tilesRenderer.setResolutionFromRenderer(camera, renderer)
     scene.add(tilesRenderer.group)
 
     const animate = () => {
-      boxMesh.rotation.x += 0.01
-      boxMesh.rotation.y += 0.01
+      // boxMesh.rotation.x += 0.01
+      // boxMesh.rotation.y += 0.01
+      cameraHelper.visible = false
+      // tiles.errorTarget = 6
+      // tiles.errorThreshold = 60 
+      // tiles.loadSiblings = true
+      // tiles.optimizeRaycast = true
+      // tiles.stopAtEmptyTiles = true
+      // tiles.displayActiveTiles = false
+      // tiles.maxDepth = 15
+      // tiles.displayBoxBounds = false
+      // tiles.displaySphereBounds = false
+      // tiles.displayRegionBounds = false
+      // tiles.colorMode = 0
+
+      // tiles.setCamera(camera)
+      // tiles.setResolutionFromRenderer( camera, renderer)
       controls.update()
       camera.updateMatrixWorld()
       tilesRenderer.update()
