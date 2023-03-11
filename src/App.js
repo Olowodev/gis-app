@@ -1,16 +1,17 @@
 import './App.css';
 import * as THREE from 'three'
 // import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { latLngToVector3, ThreeJSOverlayView } from '@googlemaps/three';
 // import mapboxgl from 'mapbox-gl';
 // import { latLngToVector3, ThreeJSOverlayView } from '@googlemaps/three';
 import { Wrapper } from '@googlemaps/react-wrapper';
-// import {OBJLoader } from 'three/examples/jsm/loaders/OBJLoader'
+import {OBJLoader } from 'three/examples/jsm/loaders/OBJLoader'
 // import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 
 function WrapperComponent() {
-  const ref = useRef()
+    const [objState, setObj] = useState()
+    const ref = useRef()
   // mapboxgl.accessToken = 'pk.eyJ1Ijoib2xvd29hIiwiYSI6ImNsZjNyMndhcTBnNm8zcm50cmFkZzI1NXAifQ.sUHuNAw9DIe1ATZcaV_ETg'
 
 
@@ -169,6 +170,38 @@ function WrapperComponent() {
     boxMesh.position.setY(45)
     scene.add(boxMesh)
 
+    const directionalLight = new THREE.DirectionalLight(0xffffff)
+        directionalLight.position.set(0, -70, 100).normalize()
+        scene.add(directionalLight)
+
+        const directionalLight2 = new THREE.DirectionalLight(0xffffff)
+        directionalLight2.position.set(0, 70, 100).normalize()
+        scene.add(directionalLight2)
+
+    const loader = new OBJLoader()
+    loader.load('/3dbag1.obj',
+      (obj) => {
+        obj.position.copy(latLngToVector3(mapOptions.center))
+        obj.position.setY(45)
+        scene.add(obj)
+        console.log(obj)
+      }
+    )
+
+    var objVar;
+
+    loader.load('/pointer.obj',
+    (obj) => {
+      obj.scale.x = 0.1
+      obj.scale.y = 0.1
+      obj.scale.z = 0.1
+      obj.position.copy(latLngToVector3(mapOptions.center))
+      obj.position.setY(85)
+      scene.add(obj)
+      objVar = obj
+      console.log(obj)
+    })
+
 
     new ThreeJSOverlayView({
       scene,
@@ -180,6 +213,9 @@ function WrapperComponent() {
     const animate = () => {
       boxMesh.rotation.x += 0.001
       boxMesh.rotation.y += 0.001
+      if (objVar) {
+      objVar.rotation.y += 0.01
+      }
       // controls.update()
       // renderer.render(scene, camera)
       requestAnimationFrame(animate)
