@@ -1,7 +1,7 @@
 import './App.css';
 import * as THREE from 'three'
 // import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { latLngToVector3, ThreeJSOverlayView } from '@googlemaps/three';
 // import mapboxgl from 'mapbox-gl';
 // import { latLngToVector3, ThreeJSOverlayView } from '@googlemaps/three';
@@ -10,7 +10,6 @@ import {OBJLoader } from 'three/examples/jsm/loaders/OBJLoader'
 // import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 
 function WrapperComponent() {
-    const [objState, setObj] = useState()
     const ref = useRef()
   // mapboxgl.accessToken = 'pk.eyJ1Ijoib2xvd29hIiwiYSI6ImNsZjNyMndhcTBnNm8zcm50cmFkZzI1NXAifQ.sUHuNAw9DIe1ATZcaV_ETg'
 
