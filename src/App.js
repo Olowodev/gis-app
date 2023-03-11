@@ -142,6 +142,7 @@ function App() {
     window.addEventListener('resize', resize)
 
     const tilesRenderer = new TilesRenderer(tilesUrl)
+    tilesRenderer.fetchOptions.mode = 'no-cors'
     tilesRenderer.setCamera(camera)
     tilesRenderer.setResolutionFromRenderer(camera, renderer)
     scene.add(tilesRenderer.group)
