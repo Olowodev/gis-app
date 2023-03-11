@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 // import { WMSTilesRenderer, WMTSTilesRenderer } from './functions';
 // import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls'
 import {TilesRenderer} from '3d-tiles-renderer'
-// import tileSet from './assets/tileset.json'
+import tileSet from './assets/tiles.json'
 import { CameraHelper, Group, sRGBEncoding } from 'three';
 // import { useEffect} from 'react';
 
@@ -141,7 +141,7 @@ function App() {
 
     window.addEventListener('resize', resize)
 
-    const tilesRenderer = new TilesRenderer('./assets/tiles.json')
+    const tilesRenderer = new TilesRenderer(tileSet)
     tilesRenderer.setCamera(camera)
     tilesRenderer.setResolutionFromRenderer(camera, renderer)
     scene.add(tilesRenderer.group)
