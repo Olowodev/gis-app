@@ -41,7 +41,7 @@ class Tile {
 
 			for ( const j of [ - 1, 0, 1 ] ) {
 
-				if ( ! ( i == 0 && j == 0 ) ) {
+				if ( ! ( i === 0 && j === 0 ) ) {
 
 				   neighbours.push( new Tile( this.tileMatrix, this.col + i, this.row + j ) );
 
@@ -167,7 +167,7 @@ class BaseTileScheme {
 
 	getTilesInView( camera, resFactor, transform ) {
 
-		if ( this.tileMatrixSet.length == 0 ) {
+		if ( this.tileMatrixSet.length === 0 ) {
 
 			return [];
 
@@ -207,7 +207,7 @@ class BaseTileScheme {
 
 		let counter = 0;
 
-		while ( queue.length != 0 ) {
+		while ( queue.length !== 0 ) {
 
 			const tile = queue.pop();
 			var neighbours = tile.getNeighbours();
@@ -234,7 +234,7 @@ class BaseTileScheme {
 
 			// prevent infinite loop
 			counter ++;
-			if ( counter == 1000 ) {
+			if ( counter === 1000 ) {
 
 				console.log( "Too many tiles in view! Skipping at 1000..." );
 				break;

@@ -45,7 +45,7 @@ export class WMTSTileScheme extends BaseTileScheme {
 
 		this.capabilities[ "Capabilities" ][ "Contents" ][ "TileMatrixSet" ].forEach( function ( tms ) {
 
-			if ( tms[ "Identifier" ][ "__text" ] == this.tileMatrixSetId ) {
+			if ( tms[ "Identifier" ][ "__text" ] === this.tileMatrixSetId ) {
 
 				const tileMatrices = tms[ "TileMatrix" ];
 				this.tileMatrixSet = [];

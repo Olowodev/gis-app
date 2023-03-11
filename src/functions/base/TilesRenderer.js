@@ -49,7 +49,7 @@ export class TilesRenderer {
 		this.tilesInView = tiles;
 
 		// check if we just changed tileLevel
-		if ( tiles.length && tiles[ 0 ].tileMatrix.level != this.tileLevel ) {
+		if ( tiles.length && tiles[ 0 ].tileMatrix.level !== this.tileLevel ) {
 
 			this.abortDownloads();
 			this.changeRenderOrder();
@@ -97,7 +97,7 @@ export class TilesRenderer {
 
 		}, this );
 
-		if ( this.needsTileLevelClean && this.downloadQueue.size == 0 ) {
+		if ( this.needsTileLevelClean && this.downloadQueue.size === 0 ) {
 
 			this.cleanTileLevels();
 
@@ -109,7 +109,7 @@ export class TilesRenderer {
 
 		for ( let i = this.group.children.length - 1; i > 0; i -- ) {
 
-			if ( this.group.children[ i ].name != this.tileLevel ) {
+			if ( this.group.children[ i ].name !== this.tileLevel ) {
 
 				// Place tiles of old tileLevel above temporary (white) tiles, but underneath fully loaded tiles of new tileLevel
 				this.group.children[ i ].renderOrder = 1;
@@ -139,7 +139,7 @@ export class TilesRenderer {
 
 		for ( let i = this.group.children.length - 1; i > 0; i -- ) {
 
-			if ( this.group.children[ i ].name != this.tileLevel ) {
+			if ( this.group.children[ i ].name !== this.tileLevel ) {
 
 				this.group.remove( this.group.children[ i ] );
 				this.resourceTracker.untrack( this.group.children[ i ] );
@@ -150,7 +150,7 @@ export class TilesRenderer {
 
 		this.activeTiles.forEach( function ( tile ) {
 
-			if ( tile.split( "-" )[ 0 ] != scope.tileLevel ) {
+			if ( tile.split( "-" )[ 0 ] !== scope.tileLevel ) {
 
 				scope.activeTiles.delete( tile );
 

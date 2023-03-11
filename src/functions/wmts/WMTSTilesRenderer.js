@@ -31,7 +31,7 @@ export class WMTSTilesRenderer extends TilesRenderer {
 
 		for ( const [ k, v ] of Object.entries( this.wmtsOptions ) ) {
 
-			if ( k != Object.keys( this.wmtsOptions )[ 0 ] ) {
+			if ( k !== Object.keys( this.wmtsOptions )[ 0 ] ) {
 
 				requestURL += "&";
 
