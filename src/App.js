@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 // import markerSprite from './assets/locationmarker.png'
 // import { WMSTilesRenderer, WMTSTilesRenderer } from './functions';
 // import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls'
-// import {TilesRenderer} from '3d-tiles-renderer'
+import {TilesRenderer} from '3d-tiles-renderer'
 // import { useEffect} from 'react';
 
 function App() {
@@ -84,7 +84,6 @@ function App() {
       antialias: true
     })
     renderer.setSize(window.innerWidth, window.innerHeight)
-    renderer.setAnimationLoop(animate)
     document.body.appendChild(renderer.domElement)
 
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.5)
@@ -116,12 +115,22 @@ function App() {
 
     window.addEventListener('resize', resize)
 
+    const tilesRenderer = new TilesRenderer()
+    tilesRenderer.setCamera(camera)
+    tilesRenderer.setResolutionFromRenderer(camera, renderer)
+    scene.add(tilesRenderer.group)
+
     const animate = () => {
       boxMesh.rotation.x += 0.01
       boxMesh.rotation.y += 0.01
       controls.update()
+      camera.updateMatrixWorld()
+      tilesRenderer.update()
       renderer.render(scene, camera)
     }
+
+    renderer.setAnimationLoop(animate)
+
   }, [])
   
 
