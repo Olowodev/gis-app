@@ -79,11 +79,12 @@ function App() {
     )
     camera.position.z = 96
 
-    const canvas = document.getElementById('canvas')
+    // const canvas = document.getElementById('canvas')
     const renderer = new THREE.WebGLRenderer({
       antialias: true
     })
     renderer.setSize(window.innerWidth, window.innerHeight)
+    renderer.setAnimationLoop(animate)
     document.body.appendChild(renderer.domElement)
 
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.5)
@@ -102,15 +103,25 @@ function App() {
 
     const controls = new OrbitControls(camera, renderer.domElement)
 
+    const resize = () => {
+      const width = window.innerWidth
+      const height = window.innerHeight
+      renderer.setSize(width, height)
+      camera.aspect = width / height
+
+      camera.updateProjectionMatrix()
+    }
+
+    resize()
+
+    window.addEventListener('resize', resize)
+
     const animate = () => {
       boxMesh.rotation.x += 0.01
       boxMesh.rotation.y += 0.01
       controls.update()
       renderer.render(scene, camera)
-      requestAnimationFrame(animate)
     }
-
-    animate()
   }, [])
   
 
