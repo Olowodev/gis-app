@@ -11,10 +11,16 @@ import {OBJLoader } from 'three/examples/jsm/loaders/OBJLoader'
 
 function WrapperComponent() {
     const ref = useRef()
+    //mapbox accesstoken initialization
+
+
   // mapboxgl.accessToken = 'pk.eyJ1Ijoib2xvd29hIiwiYSI6ImNsZjNyMndhcTBnNm8zcm50cmFkZzI1NXAifQ.sUHuNAw9DIe1ATZcaV_ETg'
 
 
   useEffect(() => {
+    //mapbox gl and threejs block of code as an option to google maps api
+
+
     // const secondOne = []
     // const map = new mapboxgl.Map({
     //   container: ref.current,
@@ -159,16 +165,25 @@ function WrapperComponent() {
       heading: 45,
       tilt: 67,
     }
+
+    //creat scene
     const scene = new THREE.Scene()
+
+    //initialize google map
     const map = new window.google.maps.Map(ref.current, mapOptions)
 
+    //create box mesh with geometry and material
     const boxGeometry = new THREE.BoxGeometry(16, 16, 16)
     const boxMaterial = new THREE.MeshNormalMaterial()
     const boxMesh = new THREE.Mesh(boxGeometry, boxMaterial)
+    //position mesh to the center of the view
     boxMesh.position.copy(latLngToVector3(mapOptions.center))
     boxMesh.position.setY(45)
+    //add mesh to the scene
     scene.add(boxMesh)
 
+
+    //add lighting to the scene to allow the users see the meshes
     const directionalLight = new THREE.DirectionalLight(0xffffff)
         directionalLight.position.set(0, -70, 100).normalize()
         scene.add(directionalLight)
@@ -177,7 +192,11 @@ function WrapperComponent() {
         directionalLight2.position.set(0, 70, 100).normalize()
         scene.add(directionalLight2)
 
+
+        //loader
     const loader = new OBJLoader()
+    //load original .obj file from the dataset (doesn't display anything)
+
     loader.load('/3dbag1.obj',
       (obj) => {
         obj.position.copy(latLngToVector3(mapOptions.center))
@@ -188,6 +207,8 @@ function WrapperComponent() {
     )
 
     var objVar;
+
+    //load a map marker exactly same way
 
     loader.load('/pointer.obj',
     (obj) => {
@@ -202,6 +223,7 @@ function WrapperComponent() {
     })
 
 
+    //initialize google map's webGlOverlayView
     new ThreeJSOverlayView({
       scene,
       map,
@@ -209,6 +231,8 @@ function WrapperComponent() {
     });
 
 
+
+    //animate meshes
     const animate = () => {
       boxMesh.rotation.x += 0.001
       boxMesh.rotation.y += 0.001
