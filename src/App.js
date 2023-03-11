@@ -141,7 +141,7 @@ function App() {
 
     window.addEventListener('resize', resize)
 
-    const tilesRenderer = new TilesRenderer('https://3dbag.nl/download/3dtiles/v210908_fd2cee53/lod22/tileset.json')
+    const tilesRenderer = new TilesRenderer('./assets/tiles.json')
     tilesRenderer.setCamera(camera)
     tilesRenderer.setResolutionFromRenderer(camera, renderer)
     scene.add(tilesRenderer.group)
