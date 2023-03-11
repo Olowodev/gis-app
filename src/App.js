@@ -1,11 +1,11 @@
 import './App.css';
 import * as THREE from 'three'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+// import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { useEffect, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
-import { latLngToVector3, ThreeJSOverlayView } from '@googlemaps/three';
-import { Wrapper } from '@googlemaps/react-wrapper';
-import {OBJLoader } from 'three/examples/jsm/loaders/OBJLoader'
+// import { latLngToVector3, ThreeJSOverlayView } from '@googlemaps/three';
+// import { Wrapper } from '@googlemaps/react-wrapper';
+// import {OBJLoader } from 'three/examples/jsm/loaders/OBJLoader'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 
 function WrapperComponent() {
@@ -14,7 +14,7 @@ function WrapperComponent() {
 
 
   useEffect(() => {
-    const secondOne = []
+    // const secondOne = []
     const map = new mapboxgl.Map({
       container: ref.current,
       style: 'mapbox://styles/mapbox/streets-v11',
@@ -59,7 +59,7 @@ function WrapperComponent() {
         directionalLight2.position.set(0, 70, 100).normalize()
         this.scene.add(directionalLight2)
 
-        const loader = new OBJLoader()
+        // const loader = new OBJLoader()
         const loader2 = new GLTFLoader()
         loader2.load(
           'https://docs.mapbox.com/mapbox-gl-js-assets/34M_17/34M_17.gltf',
