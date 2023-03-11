@@ -13,7 +13,7 @@ import { CameraHelper, Group, sRGBEncoding } from 'three';
 function App() {
 
   // const tilesUrl = 'http://godzilla.bk.tudelft.nl/3dtiles/ZuidHolland/lod13/tileset1.json'
-  const tilesUrl = './assets/tiles.json'
+  // const tilesUrl = './assets/tiles.json'
   // const baseMap = {
   //   type: 'wmts',
   //   options: {
@@ -73,7 +73,7 @@ function App() {
   
   useEffect(() => {
     const scene = new THREE.Scene()
-    let tiles;
+    // let tiles;
     const camera = new THREE.PerspectiveCamera(
       60,
       window.innerWidth / window.innerHeight,
@@ -106,18 +106,18 @@ function App() {
     const geospatialRotationParent = new Group()
     offsetParent.add(geospatialRotationParent)
 
-    function reinstantiateTiles () {
-      if (tiles) {
-        geospatialRotationParent.remove(tiles.group)
-        tiles.dispose()
-      }
+    // function reinstantiateTiles () {
+    //   if (tiles) {
+    //     geospatialRotationParent.remove(tiles.group)
+    //     tiles.dispose()
+    //   }
 
-      tiles = new TilesRenderer(tilesUrl)
-      tiles.fetchOptions.mode = 'no-cors'
-      geospatialRotationParent.add(tiles.group)
+    //   tiles = new TilesRenderer(tilesUrl)
+    //   tiles.fetchOptions.mode = 'no-cors'
+    //   geospatialRotationParent.add(tiles.group)
 
       
-    }
+    // }
 
     // reinstantiateTiles()
 
