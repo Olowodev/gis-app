@@ -155,7 +155,7 @@ function WrapperComponent() {
         // lat: 47.607465080615476
       },
       mapId: 'dc15dc155ec03ac6',
-      zoom: 19,
+      zoom: 18,
       heading: 45,
       tilt: 67,
     }
@@ -166,11 +166,11 @@ function WrapperComponent() {
     const boxMaterial = new THREE.MeshNormalMaterial()
     const boxMesh = new THREE.Mesh(boxGeometry, boxMaterial)
     boxMesh.position.copy(latLngToVector3(mapOptions.center))
-    boxMesh.position.setY(25)
+    boxMesh.position.setY(45)
     scene.add(boxMesh)
 
 
-    const overlay = new ThreeJSOverlayView({
+    new ThreeJSOverlayView({
       scene,
       map,
       THREE
@@ -178,8 +178,8 @@ function WrapperComponent() {
 
 
     const animate = () => {
-      boxMesh.rotation.x += 0.01
-      boxMesh.rotation.y += 0.01
+      boxMesh.rotation.x += 0.001
+      boxMesh.rotation.y += 0.001
       // controls.update()
       // renderer.render(scene, camera)
       requestAnimationFrame(animate)
@@ -257,6 +257,12 @@ function App() {
   return (
     <>
       <Wrapper apiKey={'AIzaSyAnzlq9yYSHWTqiw3BHC_utiL60Adf5MCI'}>
+        <div>
+
+        </div>
+        <div>
+
+        </div>
       <WrapperComponent />
     </Wrapper>
       {/* <div>
