@@ -5,6 +5,7 @@ import { useEffect, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
 import { latLngToVector3, ThreeJSOverlayView } from '@googlemaps/three';
 import { Wrapper } from '@googlemaps/react-wrapper';
+import {OBJLoader } from 'three/examples/jsm/loaders/OBJLoader'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 
 function WrapperComponent() {
@@ -13,16 +14,17 @@ function WrapperComponent() {
 
 
   useEffect(() => {
+    const secondOne = []
     const map = new mapboxgl.Map({
       container: ref.current,
       style: 'mapbox://styles/mapbox/streets-v11',
       zoom: 18,
-      center: [4.47124, 51.95838],
+      center: [5.38764, 52.15616],
       pitch: 60,
       antialias: true
     })
 
-    const modelOrigin = [4.47124, 51.95838]
+    const modelOrigin = [5.38764, 52.15616]
     const modelAltitude = 0
     const modelRotate = [Math.PI / 2, 0, 0]
 
@@ -57,13 +59,26 @@ function WrapperComponent() {
         directionalLight2.position.set(0, 70, 100).normalize()
         this.scene.add(directionalLight2)
 
-        const loader = new GLTFLoader()
-        loader.load(
-          'https://docs.mapbox.com/mapbox-gl-js/assets/34M_17/34M_17.gltf',
+        const loader = new OBJLoader()
+        const loader2 = new GLTFLoader()
+        loader2.load(
+          'https://docs.mapbox.com/mapbox-gl-js-assets/34M_17/34M_17.gltf',
           (gltf) => {
             this.scene.add(gltf.scene)
           }
         )
+        // loader.load(
+        //   '/3dbag1.obj',
+        //   (obj) => {
+        //     this.scene.add(obj)
+        //   },
+        //   (xhr) => {
+        //     console.log(xhr)
+        //   },
+        //   (err) => {
+        //     console.log(err)
+        //   }
+        // )
         this.map = map
 
         this.renderer = new THREE.WebGLRenderer({
